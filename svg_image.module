@@ -29,7 +29,7 @@ function svg_image_field_formatter_info_alter(array &$info) {
  * @param \Drupal\file\Entity\File $file
  *   SVG file.
  *
- * @return array
+ * @return integer[]
  *   Dimensions array.
  */
 function svg_image_get_image_file_dimensions(File $file) {
