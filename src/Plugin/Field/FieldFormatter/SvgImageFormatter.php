@@ -6,7 +6,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Logger\LoggerChannel;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
@@ -37,14 +37,14 @@ class SvgImageFormatter extends ImageFormatter {
   /**
    * File logger channel.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   private $logger;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct($pluginId, $pluginDefinition, FieldDefinitionInterface $fieldDefinition, array $settings, $label, $viewMode, array $thirdPartySettings, AccountInterface $currentUser, EntityStorageInterface $ImageStyleStorage, LoggerChannel $logger) {
+  public function __construct($pluginId, $pluginDefinition, FieldDefinitionInterface $fieldDefinition, array $settings, $label, $viewMode, array $thirdPartySettings, AccountInterface $currentUser, EntityStorageInterface $ImageStyleStorage, LoggerChannelInterface $logger) {
     parent::__construct($pluginId, $pluginDefinition, $fieldDefinition, $settings, $label, $viewMode, $thirdPartySettings, $currentUser, $ImageStyleStorage);
     $this->logger = $logger;
   }
