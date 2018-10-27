@@ -321,7 +321,7 @@ class SvgImageWidget extends FileWidget {
       $imageField = NestedArray::getValue($formState->getUserInput(), $parents);
       // We check for the array key, so that it can be NULL (like if the user
       // submits the form without using the "upload" button).
-      if (!array_key_exists($field, $imageField)) {
+      if (empty($imageField) || !array_key_exists($field, $imageField)) {
         return;
       }
     }
