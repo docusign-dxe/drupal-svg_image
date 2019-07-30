@@ -99,7 +99,7 @@ class SvgImageFormatter extends ImageFormatter {
     $cacheTags = [];
     if (!empty($imageStyleSetting)) {
       $imageStyle = $this->imageStyleStorage->load($imageStyleSetting);
-      $cacheTags = $imageStyle->getCacheTags();
+      $cacheTags = $imageStyle ? $imageStyle->getCacheTags() : [];
     }
 
     $svg_attributes = $this->getSetting('svg_attributes');

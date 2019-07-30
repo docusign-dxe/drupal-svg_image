@@ -33,13 +33,16 @@ function svg_image_field_formatter_info_alter(array &$info) {
  * @see template_preprocess_image_style()
  */
 function svg_image_preprocess_image_style(array &$variables) {
-  if (isset($variables['image']['#access']) && !$variables['image']['#access'] && $files = \Drupal::entityTypeManager()->getStorage('file')->loadByProperties(['uri' => $variables['uri']])) {
-    $imageFile = reset($files);
+  if (isset($variables['image']['#access']) && !$variables['image']['#access']) {
+    $files = \Drupal::entityTypeManager()->getStorage('file')
+      ->loadByProperties(['uri' => $variables['uri']]);
+    if ($files) {
+      $imageFile = reset($files);
 
-    if (svg_image_is_file_svg($imageFile)) {
-      $variables['image']['#access'] = TRUE;
-
-      $variables['image']['#attributes']['class'] = 'no-image-style';
+      if (svg_image_is_file_svg($imageFile)) {
+        $variables['image']['#access'] = TRUE;
+        $variables['image']['#attributes']['class'] = 'no-image-style';
+      }
     }
   }
 }
