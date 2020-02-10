@@ -150,13 +150,26 @@ class SvgImageFormatter extends ImageFormatter {
           $svgRaw = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $svgRaw);
           $svgRaw = trim($svgRaw);
 
-          $elements[$delta] = [
-            '#markup' => Markup::create($svgRaw),
-            '#cache' => [
-              'tags' => $cacheTags,
-              'contexts' => $cacheContexts,
-            ],
-          ];
+          if ($url) {
+            $elements[$delta] = [
+              '#type' => 'link',
+              '#url' => $url,
+              '#title' => Markup::create($svgRaw),
+              '#cache' => [
+                'tags' => $cacheTags,
+                'contexts' => $cacheContexts,
+              ],
+            ];
+          }
+          else {
+            $elements[$delta] = [
+              '#markup' => Markup::create($svgRaw),
+              '#cache' => [
+                'tags' => $cacheTags,
+                'contexts' => $cacheContexts,
+              ],
+            ];
+          }
         }
       }
     }
