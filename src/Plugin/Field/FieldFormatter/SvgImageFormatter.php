@@ -147,7 +147,7 @@ class SvgImageFormatter extends ImageFormatter {
         // Render as SVG tag.
         $svgRaw = $this->fileGetContents($file);
         if ($svgRaw) {
-          $svgRaw = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $svgRaw);
+          $svgRaw = preg_replace(['/<\?xml.*\?>/i', '/<!DOCTYPE((.|\n|\r)*?)">/i'], '', $svgRaw);
           $svgRaw = trim($svgRaw);
 
           if ($url) {
