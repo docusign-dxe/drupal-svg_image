@@ -13,6 +13,7 @@ use Drupal\file\Entity\File;
 use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatter;
 use Drupal\Core\Cache\Cache;
 use Psr\Log\LoggerInterface;
+use enshrined\svgSanitize\Sanitizer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -239,7 +240,10 @@ class SvgImageFormatter extends ImageFormatter {
     $fileUri = $file->getFileUri();
 
     if (file_exists($fileUri)) {
-      return file_get_contents($fileUri);
+      // Make sure that SVG is safe
+      $rawSvg = file_get_contents($fileUri);
+      $svgSanitizer = new Sanitizer();
+      return $svgSanitizer->sanitize($rawSvg);
     }
 
     $this->logger->error(
