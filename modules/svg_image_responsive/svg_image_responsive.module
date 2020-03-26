@@ -12,7 +12,5 @@ use Drupal\svg_image_responsive\Plugin\Field\FieldFormatter\SvgResponsiveImageFo
  */
 function svg_image_responsive_field_formatter_info_alter(array &$info) {
   $info['image']['class'] = SvgImageFormatter::class;
-  if (!empty($info['responsive_image'])) {
-    $info['responsive_image']['class'] = SvgResponsiveImageFormatter::class;
-  }
+  $info['responsive_image']['class'] = SvgResponsiveImageFormatter::class;
 }
