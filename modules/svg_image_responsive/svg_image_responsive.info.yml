@@ -5,5 +5,5 @@ type: module
 package: Media
 
 dependencies:
-  - svg_image
-  - responsive_image
+  - svg_image:svg_image
+  - drupal:responsive_image
