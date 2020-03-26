@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\svg_image\Plugin\Field\FieldFormatter;
+namespace Drupal\svg_image_responsive\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
