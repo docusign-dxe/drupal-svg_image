@@ -151,6 +151,10 @@ class SvgImageFormatter extends ImageFormatter {
           $svgRaw = preg_replace(['/<\?xml.*\?>/i', '/<!DOCTYPE((.|\n|\r)*?)">/i'], '', $svgRaw);
           $svgRaw = trim($svgRaw);
 
+          if ($this->getSetting('alt_as_title')) {
+            $svgRaw = $this->overrideTitle($svgRaw, $items[$delta]);
+          }
+
           if ($url) {
             $elements[$delta] = [
               '#type' => 'link',
@@ -183,7 +187,9 @@ class SvgImageFormatter extends ImageFormatter {
    */
   public static function defaultSettings() {
     return [
-        'svg_attributes' => ['width' => '', 'height' => ''], 'svg_render_as_image' => TRUE,
+        'svg_attributes' => ['width' => '', 'height' => ''],
+        'svg_render_as_image' => TRUE,
+        'alt_as_title' => FALSE,
       ] + parent::defaultSettings();
   }
 
@@ -198,6 +204,13 @@ class SvgImageFormatter extends ImageFormatter {
       '#title' => $this->t('Render SVG image as &lt;img&gt;'),
       '#description' => $this->t('Render SVG images as usual image in IMG tag instead of &lt;svg&gt; tag'),
       '#default_value' => $this->getSetting('svg_render_as_image'),
+    ];
+
+    $element['alt_as_title'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use alt text as the SVG title'),
+      '#description' => $this->t('Screen readers will read the SVG title tag to viewers. Select this option to override any titles set in an SVG with the one entered when uploading the image.'),
+      '#default_value' => isset($this->getSetting('svg_attributes')['alt_as_title']) ?? $this->getSetting('svg_attributes')['alt_as_title'],
     ];
 
     $element['svg_attributes'] = [
@@ -252,6 +265,37 @@ class SvgImageFormatter extends ImageFormatter {
     );
 
     return FALSE;
+  }
+
+  /**
+   * Override the SVG title with the alt text field.
+   *
+   * @param string $svgRaw
+   *   The SVG to alter.
+   * @param $item
+   *   The field item containing the alt text.
+   *
+   * @return string
+   *   The altered SVG.
+   */
+  private function overrideTitle(string $svgRaw, $item) {
+    // Replace the existing title.
+    if (preg_match('/<title>/', $svgRaw)) {
+      $svgRaw = preg_replace(
+        '/<title>[\s\S]*<\/title>/',
+        '<title>' . $item->alt . '</title>',
+        $svgRaw
+      );
+    }
+    else {
+      // No title exists, so insert a new tag.
+      $svgRaw = preg_replace(
+        '/(<svg[\s\S]+?>)/',
+        '${1}<title>' . $item->alt . '</title>',
+        $svgRaw
+      );
+    }
+    return $svgRaw;
   }
 
 }

@@ -17,6 +17,9 @@ field.formatter.settings.image:
         height:
           type: integer
           label: Height
+    alt_as_title:
+      type: boolean
+      label: 'Use the alt text as the SVG title'
     svg_render_as_image:
       type: boolean
       label: 'Render SVG image as &lt;img&gt;'
