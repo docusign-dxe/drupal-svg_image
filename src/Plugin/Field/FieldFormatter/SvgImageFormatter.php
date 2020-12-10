@@ -210,7 +210,7 @@ class SvgImageFormatter extends ImageFormatter {
       '#type' => 'checkbox',
       '#title' => $this->t('Use alt text as the SVG title'),
       '#description' => $this->t('Screen readers will read the SVG title tag to viewers. Select this option to override any titles set in an SVG with the one entered when uploading the image.'),
-      '#default_value' => isset($this->getSetting('svg_attributes')['alt_as_title']) ?? $this->getSetting('svg_attributes')['alt_as_title'],
+      '#default_value' => $this->getSetting('alt_as_title'),
     ];
 
     $element['svg_attributes'] = [
